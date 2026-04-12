@@ -1,0 +1,63 @@
+Table User {
+  id int [primary key]
+  username varchar
+  email varchar
+  password varchar
+  reputation int
+  isVerified boolean
+  verificationToken varchar
+  verificationTokenExpiry varchar
+}
+
+Table Question {
+  id int [primary key]
+  userId int
+  content text
+  createdAt timestamp
+}
+
+Table Answer {
+  id int [primary key]
+  questionId int
+  userId int
+  content text
+  createdAt timestamp
+  isAccepted boolean
+}
+
+Table Vote {
+  id int [primary key]
+  userId int
+  targetType varchar  // "question" or "answer"
+  targetId int
+  voteType varchar    // "upvote" or "downvote"
+}
+
+Table Comment {
+  id int [primary key]
+  userId int
+  questionId int [null]
+  answerId int [null]
+  content text
+  createdAt timestamp
+}
+
+Table Tag {
+  id int [primary key]
+  name varchar
+}
+
+Table QuestionTag {
+  questionId int
+  tagId int
+}
+
+Ref: Question.userId > User.id
+Ref: Answer.userId > User.id
+Ref: Answer.questionId > Question.id
+Ref: Vote.userId > User.id
+Ref: Comment.userId > User.id
+Ref: Comment.questionId > Question.id
+Ref: Comment.answerId > Answer.id
+Ref: QuestionTag.questionId > Question.id
+Ref: QuestionTag.tagId > Tag.id
