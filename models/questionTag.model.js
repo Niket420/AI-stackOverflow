@@ -3,12 +3,14 @@ import mongoose from "mongoose"
 
 const QuestionTagSchema = new mongoose.Schema({
     tagId : {
-        type: Number,
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"Tag",
         required: true
     },
 
     questionId : {
-        type: Number,
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"Question",
         required:true,
     },
 
@@ -16,5 +18,13 @@ const QuestionTagSchema = new mongoose.Schema({
 {
     timestamps : true
 })
+
+QuestionTagSchema.index(
+
+    { questionId: 1, tagId: 1 },
+
+    { unique: true }
+
+);
 
 export const QuestionTag = mongoose.model('QuestionTag', QuestionTagSchema);

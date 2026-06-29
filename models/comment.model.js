@@ -3,17 +3,19 @@ import mongoose from "mongoose"
 
 const CommentSchema = new mongoose.Schema({
     userId : {
-        type: Number,
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"User",
         required: true
     },
 
-    questionId : {
-        type: Number,
-        required:true,
+    targetType: {
+        type: String,
+        enum: ["Question", "Answer"],
+        required: true
     },
 
-    answerId : {
-        type: Number,
+    targetId: {
+        type: mongoose.Schema.Types.ObjectId,
         required: true
     },
 

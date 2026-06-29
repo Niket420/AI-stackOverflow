@@ -3,7 +3,8 @@ import mongoose from "mongoose"
 
 const QuestionSchema = new mongoose.Schema({
     userId : {
-        type: Number,
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"User",
         required: true
     },
 

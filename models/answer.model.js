@@ -3,12 +3,14 @@ import mongoose from "mongoose"
 
 const AnswerSchema = new mongoose.Schema({
     userId : {
-        type: Number,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
         required: true
     },
 
     questionId : {
-        type: Number,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Question",
         required:true,
     },
 
