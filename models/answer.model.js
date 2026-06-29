@@ -46,20 +46,20 @@ const UserSchema = new mongoose.Schema({
 });
 
 // HASH PASSWORD BEFORE SAVING
-userSchema.pre("save", async function () {
-    if (!this.isModified("password")) return
-    this.password = await bcrypt.hash(this.password, 10)
+UserSchema.pre("save", async function () {
+    if (!this.isModified("password")) return;
+    this.password = await bcrypt.hash(this.password, 10);
 })
 
 
 // CHECK PASSWORD
-userSchema.methods.isPasswordCorrect = async function(password) {
+UserSchema.methods.isPasswordCorrect = async function(password) {
     return await bcrypt.compare(password, this.password)
 }
 
 
 // ACCESS TOKEN
-userSchema.methods.generateAccessToken = function () {
+UserSchema.methods.generateAccessToken = function () {
     return jwt.sign(
         {
             _id: this._id,
@@ -75,7 +75,7 @@ userSchema.methods.generateAccessToken = function () {
 
 
 // REFRESH TOKEN
-userSchema.methods.generateRefreshToken = function () {
+UserSchema.methods.generateRefreshToken = function () {
     return jwt.sign(
         {
             _id: this._id,
@@ -91,7 +91,7 @@ userSchema.methods.generateRefreshToken = function () {
 
 
 // TEMP TOKEN
-userSchema.methods.generateTemporaryToken = function () {
+UserSchema.methods.generateTemporaryToken = function () {
     const unHashedToken = crypto.randomBytes(20).toString("hex")
     const hashedToken = crypto
         .createHash("sha256")
